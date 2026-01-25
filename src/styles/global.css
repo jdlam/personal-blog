@@ -90,6 +90,8 @@ code {
 pre {
 	padding: 1.5em;
 	border-radius: 8px;
+	background-color: rgb(var(--gray-light)) !important;
+	border: 1px solid rgba(var(--gray), 0.2);
 }
 pre > code {
 	all: unset;
