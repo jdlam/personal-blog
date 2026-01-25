@@ -1,0 +1,171 @@
+---
+title: 'Content Features Demo'
+description: 'A showcase of syntax highlighting, charts, and math equations'
+pubDate: 'Jan 25 2026'
+---
+import Chart from '../../components/Chart.astro';
+
+This post demonstrates the content features available for writing rich technical posts.
+
+## Code Blocks
+
+Syntax highlighting is automatically applied to fenced code blocks. Here are some examples:
+
+### JavaScript
+
+```javascript
+function fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// Generate first 10 Fibonacci numbers
+const sequence = Array.from({ length: 10 }, (_, i) => fibonacci(i));
+console.log(sequence); // [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+```
+
+### Python
+
+```python
+from dataclasses import dataclass
+from typing import List
+
+@dataclass
+class DataPoint:
+    x: float
+    y: float
+    label: str
+
+def analyze(points: List[DataPoint]) -> dict:
+    """Calculate basic statistics for a set of points."""
+    x_values = [p.x for p in points]
+    y_values = [p.y for p in points]
+    return {
+        "mean_x": sum(x_values) / len(x_values),
+        "mean_y": sum(y_values) / len(y_values),
+        "count": len(points)
+    }
+```
+
+### TypeScript
+
+```typescript
+interface Config {
+  apiKey: string;
+  endpoint: string;
+  timeout?: number;
+}
+
+async function fetchData<T>(config: Config): Promise<T> {
+  const response = await fetch(config.endpoint, {
+    headers: { Authorization: `Bearer ${config.apiKey}` },
+    signal: AbortSignal.timeout(config.timeout ?? 5000),
+  });
+  return response.json();
+}
+```
+
+## Charts
+
+Interactive charts can be embedded using the Chart component:
+
+### Bar Chart
+
+<Chart
+  type="bar"
+  data={{
+    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+    datasets: [{
+      label: 'Revenue',
+      data: [12, 19, 8, 15]
+    }]
+  }}
+/>
+
+### Line Chart
+
+<Chart
+  type="line"
+  data={{
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    datasets: [{
+      label: 'Growth',
+      data: [10, 15, 13, 22, 28, 35],
+      fill: false
+    }]
+  }}
+/>
+
+### Pie Chart
+
+<Chart
+  type="pie"
+  data={{
+    labels: ['Desktop', 'Mobile', 'Tablet'],
+    datasets: [{
+      data: [55, 35, 10],
+      backgroundColor: ['rgba(23, 23, 23, 0.8)', 'rgba(115, 115, 115, 0.8)', 'rgba(200, 200, 200, 0.8)']
+    }]
+  }}
+/>
+
+## Math Equations
+
+Mathematical notation is rendered using KaTeX. You can use both inline and block equations.
+
+### Inline Math
+
+The quadratic formula is $x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$.
+
+Einstein's famous equation $E = mc^2$ relates energy and mass.
+
+### Block Equations
+
+The Gaussian distribution:
+
+$$
+f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}
+$$
+
+Euler's identity:
+
+$$
+e^{i\pi} + 1 = 0
+$$
+
+A matrix example:
+
+$$
+A = \begin{pmatrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33}
+\end{pmatrix}
+$$
+
+## Combining Features
+
+These features can be combined naturally. For example, here's a function that calculates the mean:
+
+```javascript
+function mean(values) {
+  return values.reduce((a, b) => a + b, 0) / values.length;
+}
+```
+
+The mathematical definition is: $\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$
+
+And visualized:
+
+<Chart
+  type="bar"
+  data={{
+    labels: ['x₁', 'x₂', 'x₃', 'x₄', 'x₅'],
+    datasets: [{
+      label: 'Values',
+      data: [4, 7, 2, 9, 5]
+    }]
+  }}
+/>
+
+The mean of these values is $(4 + 7 + 2 + 9 + 5) / 5 = 5.4$.
