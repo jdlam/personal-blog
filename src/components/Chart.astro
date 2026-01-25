@@ -46,20 +46,13 @@ const userOptions = options;
 </div>
 
 <script define:vars={{ chartId, type, rawData, hasScales, userOptions }}>
-	// Detect current theme by checking computed background color
+	// Detect current theme
 	function isDarkMode() {
-		// First check explicit data-theme attribute
 		const dataTheme = document.documentElement.getAttribute('data-theme');
 		if (dataTheme === 'light') return false;
 		if (dataTheme === 'dark') return true;
-
-		// Fall back to checking if user prefers light mode
-		if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-			return false;
-		}
-
-		// Default to dark mode
-		return true;
+		// Fall back to system preference
+		return !window.matchMedia('(prefers-color-scheme: light)').matches;
 	}
 
 	// Theme-aware colors - high contrast for visibility
@@ -88,29 +81,34 @@ const userOptions = options;
 		// Dark colors on light background
 		return {
 			colors: [
-				'rgba(0, 0, 0, 0.85)',
-				'rgba(80, 80, 80, 0.85)',
-				'rgba(0, 0, 0, 0.5)',
-				'rgba(80, 80, 80, 0.5)',
-				'rgba(40, 40, 40, 0.85)',
+				'rgba(55, 65, 81, 0.9)',
+				'rgba(107, 114, 128, 0.9)',
+				'rgba(55, 65, 81, 0.6)',
+				'rgba(107, 114, 128, 0.6)',
+				'rgba(75, 85, 99, 0.9)',
 			],
 			borders: [
-				'rgb(0, 0, 0)',
-				'rgb(80, 80, 80)',
-				'rgb(0, 0, 0)',
-				'rgb(80, 80, 80)',
-				'rgb(40, 40, 40)',
+				'rgb(55, 65, 81)',
+				'rgb(107, 114, 128)',
+				'rgb(55, 65, 81)',
+				'rgb(107, 114, 128)',
+				'rgb(75, 85, 99)',
 			],
-			text: 'rgb(23, 23, 23)',
-			grid: 'rgba(0, 0, 0, 0.1)',
+			text: 'rgb(55, 65, 81)',
+			grid: 'rgba(55, 65, 81, 0.15)',
 		};
 	}
 
-	// Dynamic import Chart.js only when needed
-	import('https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js').then(() => {
-		const Chart = window.Chart;
+	let chartInstance = null;
+
+	function createChart(Chart) {
 		const ctx = document.getElementById(chartId);
 		if (!ctx) return;
+
+		// Destroy existing chart if any
+		if (chartInstance) {
+			chartInstance.destroy();
+		}
 
 		const isDark = isDarkMode();
 		const { colors, borders, text, grid } = getColors(isDark);
@@ -161,10 +159,33 @@ const userOptions = options;
 			...userOptions,
 		};
 
-		new Chart(ctx, {
+		chartInstance = new Chart(ctx, {
 			type: type,
 			data: processedData,
 			options: chartOptions,
+		});
+	}
+
+	// Dynamic import Chart.js only when needed
+	import('https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js').then(() => {
+		const Chart = window.Chart;
+
+		// Create initial chart
+		createChart(Chart);
+
+		// Watch for theme changes and recreate chart
+		const observer = new MutationObserver((mutations) => {
+			for (const mutation of mutations) {
+				if (mutation.attributeName === 'data-theme') {
+					createChart(Chart);
+					break;
+				}
+			}
+		});
+
+		observer.observe(document.documentElement, {
+			attributes: true,
+			attributeFilter: ['data-theme'],
 		});
 	});
 </script>
