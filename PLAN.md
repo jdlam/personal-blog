@@ -29,7 +29,7 @@
 - [x] Image optimization settings
 
 ### Phase 3: Polish
-- [ ] Dark mode toggle
+- [x] Dark mode toggle
 - [ ] RSS feed styling
 - [ ] SEO improvements (Open Graph, etc.)
 - [ ] 404 page
