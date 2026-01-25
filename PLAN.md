@@ -23,10 +23,10 @@
 - [x] Clean up footer
 
 ### Phase 2: Content Support
-- [ ] Add syntax highlighting for code blocks
-- [ ] Integrate chart library (Chart.js or similar) via MDX
-- [ ] Add support for math/equations if needed
-- [ ] Image optimization settings
+- [x] Add syntax highlighting for code blocks
+- [x] Integrate chart library (Chart.js or similar) via MDX
+- [x] Add support for math/equations if needed
+- [x] Image optimization settings
 
 ### Phase 3: Polish
 - [ ] Dark mode toggle
