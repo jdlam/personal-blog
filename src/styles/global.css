@@ -47,7 +47,7 @@
 	--box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* Shiki dual-theme support */
+/* Shiki dual-theme support with contrast fixes */
 @media (prefers-color-scheme: light) {
 	.shiki {
 		color: #24292e !important;
@@ -55,6 +55,13 @@
 	}
 	.shiki span {
 		color: var(--shiki-light, #24292e) !important;
+	}
+	/* Fix low-contrast colors in light mode */
+	.shiki span[style*="--shiki-light:#6A737D"] {
+		color: #57606a !important; /* Darker gray for comments */
+	}
+	.shiki span[style*="--shiki-light:#E36209"] {
+		color: #b35900 !important; /* Darker orange for properties */
 	}
 }
 
@@ -64,6 +71,12 @@
 }
 [data-theme="light"] .shiki span {
 	color: var(--shiki-light, #24292e) !important;
+}
+[data-theme="light"] .shiki span[style*="--shiki-light:#6A737D"] {
+	color: #57606a !important;
+}
+[data-theme="light"] .shiki span[style*="--shiki-light:#E36209"] {
+	color: #b35900 !important;
 }
 
 [data-theme="dark"] .shiki {
