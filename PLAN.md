@@ -42,6 +42,22 @@
 | Fonts | System font stack | Fast, no external requests |
 | Styling | Vanilla CSS | Already in template, keeps it simple |
 | Dark mode | CSS variables + JS toggle | Respects user preference |
+| Syntax highlighting | Shiki (via Astro) | Dual themes, VS Code-quality highlighting |
+
+## Theme Implementation
+
+### Syntax Highlighting
+- Astro uses **Shiki** under the hood for code block highlighting
+- Configured in `astro.config.mjs` with dual themes: `github-light` and `github-dark`
+- Shiki outputs CSS custom properties (`--shiki-light`, `--shiki-dark`) on each token
+- CSS in `global.css` switches between them based on `[data-theme]` attribute
+- Note: Astro outputs `.astro-code` class (not `.shiki`) on code blocks
+
+### Light Mode Design
+- Uses warm off-white background (`#fafaf9`) instead of pure white
+- Softer text colors (slate grays) for reduced eye strain
+- Syntax highlighting colors adjusted for lower contrast while maintaining readability
+- Borders and shadows use warmer, subtler tones
 
 ## Content Structure
 
