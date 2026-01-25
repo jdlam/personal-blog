@@ -46,51 +46,62 @@ const userOptions = options;
 </div>
 
 <script define:vars={{ chartId, type, rawData, hasScales, userOptions }}>
-	// Detect current theme
+	// Detect current theme by checking computed background color
 	function isDarkMode() {
+		// First check explicit data-theme attribute
 		const dataTheme = document.documentElement.getAttribute('data-theme');
-		if (dataTheme) return dataTheme === 'dark';
-		return !window.matchMedia('(prefers-color-scheme: light)').matches;
+		if (dataTheme === 'light') return false;
+		if (dataTheme === 'dark') return true;
+
+		// Fall back to checking if user prefers light mode
+		if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+			return false;
+		}
+
+		// Default to dark mode
+		return true;
 	}
 
-	// Theme-aware colors
+	// Theme-aware colors - high contrast for visibility
 	function getColors(isDark) {
 		if (isDark) {
+			// Light colors on dark background
 			return {
 				colors: [
-					'rgba(229, 229, 229, 0.8)',
-					'rgba(163, 163, 163, 0.8)',
-					'rgba(229, 229, 229, 0.5)',
-					'rgba(163, 163, 163, 0.5)',
-					'rgba(200, 200, 200, 0.8)',
+					'rgba(255, 255, 255, 0.9)',
+					'rgba(180, 180, 180, 0.9)',
+					'rgba(255, 255, 255, 0.6)',
+					'rgba(180, 180, 180, 0.6)',
+					'rgba(220, 220, 220, 0.9)',
 				],
 				borders: [
-					'rgb(229, 229, 229)',
-					'rgb(163, 163, 163)',
-					'rgb(229, 229, 229)',
-					'rgb(163, 163, 163)',
-					'rgb(200, 200, 200)',
+					'rgb(255, 255, 255)',
+					'rgb(180, 180, 180)',
+					'rgb(255, 255, 255)',
+					'rgb(180, 180, 180)',
+					'rgb(220, 220, 220)',
 				],
 				text: 'rgb(229, 229, 229)',
-				grid: 'rgba(229, 229, 229, 0.1)',
+				grid: 'rgba(255, 255, 255, 0.1)',
 			};
 		}
+		// Dark colors on light background
 		return {
 			colors: [
-				'rgba(23, 23, 23, 0.8)',
-				'rgba(115, 115, 115, 0.8)',
-				'rgba(23, 23, 23, 0.5)',
-				'rgba(115, 115, 115, 0.5)',
-				'rgba(38, 38, 38, 0.8)',
+				'rgba(0, 0, 0, 0.85)',
+				'rgba(80, 80, 80, 0.85)',
+				'rgba(0, 0, 0, 0.5)',
+				'rgba(80, 80, 80, 0.5)',
+				'rgba(40, 40, 40, 0.85)',
 			],
 			borders: [
-				'rgb(23, 23, 23)',
-				'rgb(115, 115, 115)',
-				'rgb(23, 23, 23)',
-				'rgb(115, 115, 115)',
-				'rgb(38, 38, 38)',
+				'rgb(0, 0, 0)',
+				'rgb(80, 80, 80)',
+				'rgb(0, 0, 0)',
+				'rgb(80, 80, 80)',
+				'rgb(40, 40, 40)',
 			],
-			text: 'rgb(38, 38, 38)',
+			text: 'rgb(23, 23, 23)',
 			grid: 'rgba(0, 0, 0, 0.1)',
 		};
 	}
