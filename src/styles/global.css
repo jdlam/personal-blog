@@ -49,23 +49,29 @@
 
 /* Shiki dual-theme support */
 @media (prefers-color-scheme: light) {
-	.shiki,
+	.shiki {
+		color: var(--shiki-light, #1f1f1f) !important;
+		background-color: transparent !important;
+	}
 	.shiki span {
 		color: var(--shiki-light) !important;
-		background-color: var(--shiki-light-bg) !important;
 	}
 }
 
-[data-theme="light"] .shiki,
+[data-theme="light"] .shiki {
+	color: var(--shiki-light, #1f1f1f) !important;
+	background-color: transparent !important;
+}
 [data-theme="light"] .shiki span {
 	color: var(--shiki-light) !important;
-	background-color: var(--shiki-light-bg) !important;
 }
 
-[data-theme="dark"] .shiki,
+[data-theme="dark"] .shiki {
+	color: var(--shiki-dark, #e5e5e5) !important;
+	background-color: transparent !important;
+}
 [data-theme="dark"] .shiki span {
 	color: var(--shiki-dark) !important;
-	background-color: var(--shiki-dark-bg) !important;
 }
 
 body {
