@@ -13,7 +13,11 @@ const { title, description, pubDate, updatedDate } = Astro.props;
 
 <html lang="en">
 	<head>
-		<BaseHead title={`${title} - ${SITE_TITLE}`} description={description} />
+		<BaseHead
+			title={`${title} - ${SITE_TITLE}`}
+			description={description}
+			article={{ publishedTime: pubDate, modifiedTime: updatedDate }}
+		/>
 	</head>
 
 	<body>

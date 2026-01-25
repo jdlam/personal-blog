@@ -1,0 +1,63 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={`Page Not Found - ${SITE_TITLE}`} description="The page you're looking for doesn't exist." />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="error-page">
+				<h1>404</h1>
+				<p class="subtitle">Page not found</p>
+				<p>The page you're looking for doesn't exist or has been moved.</p>
+				<nav class="error-nav">
+					<a href="/">Go home</a>
+					<a href="/blog">Browse posts</a>
+				</nav>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.error-page {
+		text-align: center;
+		padding: 4em 0;
+	}
+	.error-page h1 {
+		font-size: 6em;
+		margin: 0;
+		line-height: 1;
+		color: rgb(var(--gray));
+	}
+	.subtitle {
+		font-size: 1.5em;
+		color: rgb(var(--gray-dark));
+		margin: 0.5em 0 1em;
+	}
+	.error-nav {
+		margin-top: 2em;
+		display: flex;
+		gap: 1.5em;
+		justify-content: center;
+	}
+	.error-nav a {
+		color: var(--accent);
+		text-decoration: none;
+		padding: 0.5em 1em;
+		border: 1px solid rgb(var(--border));
+		border-radius: 4px;
+		transition: background-color 0.2s, color 0.2s;
+	}
+	.error-nav a:hover {
+		background-color: var(--bg-secondary);
+		color: var(--accent-hover);
+	}
+</style>

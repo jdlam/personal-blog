@@ -30,9 +30,9 @@
 
 ### Phase 3: Polish
 - [x] Dark mode toggle
-- [ ] RSS feed styling
-- [ ] SEO improvements (Open Graph, etc.)
-- [ ] 404 page
+- [x] RSS feed styling
+- [x] SEO improvements (Open Graph, etc.)
+- [x] 404 page
 
 ## Technical Decisions
 
