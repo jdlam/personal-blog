@@ -1,19 +1,16 @@
-# Astro Starter Kit: Blog
+# Personal Blog
 
-```sh
-npm create astro@latest -- --template blog
-```
+A minimal, typography-focused blog built with Astro.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Features
 
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+- Minimal, clean design focused on readability
+- Dark/light mode with user preference detection
+- Syntax highlighting with Shiki (dual theme support)
+- Math/equations with KaTeX
+- Charts via MDX + Chart.js
+- RSS feed and sitemap
+- Markdown & MDX support
 
 ## 🚀 Project Structure
 
@@ -53,10 +50,19 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## Theme System
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The site uses a `data-theme` attribute on `<html>` for theme switching:
+- Dark mode: warm dark grays, high readability
+- Light mode: low-contrast warm tones, easy on the eyes
+
+Syntax highlighting automatically switches between `github-dark` and `github-light` themes.
+
+## Learn More
+
+- [Astro Documentation](https://docs.astro.build)
+- [Shiki Syntax Highlighter](https://shiki.style)
 
 ## Credit
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Based on the [Astro Blog template](https://github.com/withastro/astro/tree/main/examples/blog), inspired by [Bear Blog](https://github.com/HermanMartinus/bearblog/).

@@ -1,0 +1,12 @@
+---
+description: Personal blog project conventions - see CLAUDE.md for details
+alwaysApply: true
+---
+
+Read `CLAUDE.md` in the project root for full agent instructions covering:
+
+- Project stack (Astro, MDX, Shiki, KaTeX, Chart.js)
+- Theme system (`data-theme` attribute, CSS variables)
+- Syntax highlighting (`.astro-code` class, NOT `.shiki`)
+- Blog content conventions (frontmatter, MDX features)
+- Design principles
