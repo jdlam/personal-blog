@@ -40,7 +40,8 @@
 		color: rgb(var(--text));
 	}
 
-	/* Show sun icon in dark mode (to switch to light) */
+	/* Show sun icon in dark mode (click to switch to light) */
+	/* Show moon icon in light mode (click to switch to dark) */
 	.sun-icon {
 		display: block;
 	}
@@ -48,28 +49,11 @@
 		display: none;
 	}
 
-	/* Show moon icon in light mode (to switch to dark) */
 	:global([data-theme="light"]) .sun-icon {
 		display: none;
 	}
 	:global([data-theme="light"]) .moon-icon {
 		display: block;
-	}
-
-	@media (prefers-color-scheme: light) {
-		.sun-icon {
-			display: none;
-		}
-		.moon-icon {
-			display: block;
-		}
-	}
-
-	:global([data-theme="dark"]) .sun-icon {
-		display: block;
-	}
-	:global([data-theme="dark"]) .moon-icon {
-		display: none;
 	}
 </style>
 
@@ -78,25 +62,17 @@
 		const toggle = document.getElementById('theme-toggle');
 		if (!toggle) return;
 
-		// Get stored preference or default to null (use system/CSS default)
+		// Get stored preference or use system preference
 		const stored = localStorage.getItem('theme');
-		if (stored) {
-			document.documentElement.setAttribute('data-theme', stored);
-		}
+		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		const theme = stored || (prefersDark ? 'dark' : 'light');
+		
+		// Always set the data-theme attribute so CSS has a single source of truth
+		document.documentElement.setAttribute('data-theme', theme);
 
 		toggle.addEventListener('click', () => {
 			const current = document.documentElement.getAttribute('data-theme');
-			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-			let newTheme: string;
-			if (current === 'light') {
-				newTheme = 'dark';
-			} else if (current === 'dark') {
-				newTheme = 'light';
-			} else {
-				// No explicit theme set, toggle from system preference
-				newTheme = prefersDark ? 'light' : 'dark';
-			}
+			const newTheme = current === 'light' ? 'dark' : 'light';
 
 			document.documentElement.setAttribute('data-theme', newTheme);
 			localStorage.setItem('theme', newTheme);

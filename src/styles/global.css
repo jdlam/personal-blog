@@ -1,53 +1,11 @@
-/* Dark mode (default) */
-:root {
-	--accent: #e5e5e5;
-	--accent-hover: #fff;
-	--bg: #1a1a1a;
-	--bg-secondary: #262626;
-	--text: 229, 229, 229;
-	--text-muted: 163, 163, 163;
-	--border: 64, 64, 64;
-	--box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-	--black: 229, 229, 229;
-	--gray-dark: 212, 212, 212;
-	--gray: 163, 163, 163;
-	--gray-light: 64, 64, 64;
-}
+/*
+ * Theme system: Uses data-theme attribute on <html> element.
+ * JavaScript sets the initial value based on localStorage or system preference.
+ * This avoids CSS cascade conflicts between media queries and attribute selectors.
+ */
 
-/* Light mode (when user prefers it) */
-@media (prefers-color-scheme: light) {
-	:root {
-		--accent: #171717;
-		--accent-hover: #000;
-		--bg: #fff;
-		--bg-secondary: #f5f5f5;
-		--text: 38, 38, 38;
-		--text-muted: 82, 82, 82;
-		--border: 229, 229, 229;
-		--box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-		--black: 0, 0, 0;
-		--gray-dark: 64, 64, 64;
-		--gray: 82, 82, 82;
-		--gray-light: 229, 229, 229;
-	}
-}
-
-/* Manual theme override via data attribute */
-[data-theme="light"] {
-	--accent: #171717;
-	--accent-hover: #000;
-	--bg: #fff;
-	--bg-secondary: #f5f5f5;
-	--text: 38, 38, 38;
-	--text-muted: 82, 82, 82;
-	--border: 229, 229, 229;
-	--box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-	--black: 0, 0, 0;
-	--gray-dark: 64, 64, 64;
-	--gray: 82, 82, 82;
-	--gray-light: 229, 229, 229;
-}
-
+/* Dark theme (default) */
+:root,
 [data-theme="dark"] {
 	--accent: #e5e5e5;
 	--accent-hover: #fff;
@@ -61,46 +19,64 @@
 	--gray-dark: 212, 212, 212;
 	--gray: 163, 163, 163;
 	--gray-light: 64, 64, 64;
+	color-scheme: dark;
 }
 
-/* Shiki dual-theme support with contrast fixes */
-@media (prefers-color-scheme: light) {
-	.shiki {
-		color: #24292e !important;
-		background-color: transparent !important;
-	}
-	.shiki span {
-		color: var(--shiki-light, #24292e) !important;
-	}
-	/* Fix low-contrast colors in light mode */
-	.shiki span[style*="--shiki-light:#6A737D"] {
-		color: #57606a !important; /* Darker gray for comments */
-	}
-	.shiki span[style*="--shiki-light:#E36209"] {
-		color: #b35900 !important; /* Darker orange for properties */
-	}
+/* Light theme */
+[data-theme="light"] {
+	--accent: #374151;
+	--accent-hover: #1f2937;
+	--bg: #fafaf9;
+	--bg-secondary: #f0f0ee;
+	--text: 55, 65, 81;
+	--text-muted: 107, 114, 128;
+	--border: 214, 211, 209;
+	--box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+	--black: 31, 41, 55;
+	--gray-dark: 75, 85, 99;
+	--gray: 107, 114, 128;
+	--gray-light: 214, 211, 209;
+	color-scheme: light;
 }
 
-[data-theme="light"] .shiki {
-	color: #24292e !important;
+/* Shiki syntax highlighting - dark theme (default) */
+.astro-code {
 	background-color: transparent !important;
 }
-[data-theme="light"] .shiki span {
-	color: var(--shiki-light, #24292e) !important;
-}
-[data-theme="light"] .shiki span[style*="--shiki-light:#6A737D"] {
-	color: #57606a !important;
-}
-[data-theme="light"] .shiki span[style*="--shiki-light:#E36209"] {
-	color: #b35900 !important;
+.astro-code,
+.astro-code span {
+	color: var(--shiki-dark) !important;
 }
 
-[data-theme="dark"] .shiki {
-	color: #e5e5e5 !important;
-	background-color: transparent !important;
+/* Shiki syntax highlighting - light theme with contrast fixes */
+[data-theme="light"] .astro-code,
+[data-theme="light"] .astro-code span {
+	color: var(--shiki-light) !important;
 }
-[data-theme="dark"] .shiki span {
-	color: var(--shiki-dark, #e5e5e5) !important;
+/* Override low-contrast colors in light mode for better readability */
+[data-theme="light"] .astro-code span[style*="--shiki-light:#6A737D"] {
+	color: #6b7280 !important; /* Comments: soft gray */
+}
+[data-theme="light"] .astro-code span[style*="--shiki-light:#E36209"] {
+	color: #b45309 !important; /* Properties/numbers: warm amber */
+}
+[data-theme="light"] .astro-code span[style*="--shiki-light:#735C0F"] {
+	color: #78716c !important; /* Attributes: warm gray */
+}
+[data-theme="light"] .astro-code span[style*="--shiki-light:#22863A"] {
+	color: #15803d !important; /* Strings/types: soft green */
+}
+[data-theme="light"] .astro-code span[style*="--shiki-light:#005CC5"] {
+	color: #2563eb !important; /* Constants: soft blue */
+}
+[data-theme="light"] .astro-code span[style*="--shiki-light:#6F42C1"] {
+	color: #7c3aed !important; /* Functions: soft purple */
+}
+[data-theme="light"] .astro-code span[style*="--shiki-light:#959DA5"] {
+	color: #6b7280 !important; /* Punctuation: soft gray */
+}
+[data-theme="light"] .astro-code span[style*="--shiki-light:#E1E4E8"] {
+	color: #57534e !important; /* Brackets/punctuation: warm gray */
 }
 
 body {
