@@ -17,7 +17,7 @@ export default defineConfig({
 				dark: 'github-dark',
 			},
 			wrap: true,
-			defaultColor: 'dark',
+			defaultColor: false,
 		},
 		remarkPlugins: [remarkMath],
 		rehypePlugins: [rehypeKatex],
