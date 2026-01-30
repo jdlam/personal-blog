@@ -55,49 +55,60 @@ const userOptions = options;
 		return !window.matchMedia('(prefers-color-scheme: light)').matches;
 	}
 
-	// Theme-aware colors - using teal and coral accent colors
+	// Theme-aware colors - diverse palette with high contrast
 	function getColors(isDark) {
 		if (isDark) {
-			// Vibrant colors on dark background
+			// Vibrant, distinct colors on dark background
 			return {
 				colors: [
-					'rgba(45, 212, 191, 0.85)',   // Teal (primary)
-					'rgba(244, 162, 97, 0.85)',   // Coral/Orange (secondary)
-					'rgba(94, 234, 212, 0.75)',   // Light teal
-					'rgba(249, 196, 154, 0.75)',  // Light coral
-					'rgba(129, 230, 217, 0.8)',   // Medium teal
+					'rgba(45, 212, 191, 0.9)',    // Teal (primary)
+					'rgba(251, 146, 60, 0.9)',    // Orange
+					'rgba(168, 85, 247, 0.9)',    // Purple
+					'rgba(251, 191, 36, 0.9)',    // Amber/Yellow
+					'rgba(236, 72, 153, 0.9)',    // Pink
+					'rgba(34, 197, 94, 0.9)',     // Green
+					'rgba(96, 165, 250, 0.9)',    // Blue
 				],
 				borders: [
 					'rgb(45, 212, 191)',
-					'rgb(244, 162, 97)',
-					'rgb(94, 234, 212)',
-					'rgb(249, 196, 154)',
-					'rgb(129, 230, 217)',
+					'rgb(251, 146, 60)',
+					'rgb(168, 85, 247)',
+					'rgb(251, 191, 36)',
+					'rgb(236, 72, 153)',
+					'rgb(34, 197, 94)',
+					'rgb(96, 165, 250)',
 				],
 				text: 'rgb(244, 244, 245)',
 				grid: 'rgba(63, 63, 70, 0.5)',
 			};
 		}
-		// Vibrant colors on light background
+		// Vibrant, distinct colors on light background
 		return {
 			colors: [
 				'rgba(13, 148, 136, 0.85)',    // Teal (primary)
-				'rgba(224, 122, 95, 0.85)',    // Coral (secondary)
-				'rgba(20, 184, 166, 0.75)',    // Light teal
-				'rgba(239, 154, 129, 0.75)',   // Light coral
-				'rgba(45, 212, 191, 0.8)',     // Medium teal
+				'rgba(234, 88, 12, 0.85)',     // Orange
+				'rgba(147, 51, 234, 0.85)',    // Purple
+				'rgba(202, 138, 4, 0.85)',     // Amber/Yellow
+				'rgba(219, 39, 119, 0.85)',    // Pink
+				'rgba(22, 163, 74, 0.85)',     // Green
+				'rgba(37, 99, 235, 0.85)',     // Blue
 			],
 			borders: [
 				'rgb(13, 148, 136)',
-				'rgb(224, 122, 95)',
-				'rgb(20, 184, 166)',
-				'rgb(239, 154, 129)',
-				'rgb(45, 212, 191)',
+				'rgb(234, 88, 12)',
+				'rgb(147, 51, 234)',
+				'rgb(202, 138, 4)',
+				'rgb(219, 39, 119)',
+				'rgb(22, 163, 74)',
+				'rgb(37, 99, 235)',
 			],
 			text: 'rgb(41, 37, 36)',
 			grid: 'rgba(214, 211, 209, 0.7)',
 		};
 	}
+	
+	// Check if chart type needs per-segment colors (pie, doughnut)
+	const needsSegmentColors = type === 'pie' || type === 'doughnut';
 
 	let chartInstance = null;
 
@@ -115,12 +126,31 @@ const userOptions = options;
 
 		const processedData = {
 			...rawData,
-			datasets: rawData.datasets.map((dataset, index) => ({
-				...dataset,
-				backgroundColor: dataset.backgroundColor || colors[index % colors.length],
-				borderColor: dataset.borderColor || borders[index % borders.length],
-				borderWidth: dataset.borderWidth ?? 2,
-			})),
+			datasets: rawData.datasets.map((dataset, index) => {
+				// For pie/doughnut charts, apply array of colors to each segment
+				if (needsSegmentColors && !dataset.backgroundColor) {
+					const segmentCount = dataset.data.length;
+					const segmentColors = [];
+					const segmentBorders = [];
+					for (let i = 0; i < segmentCount; i++) {
+						segmentColors.push(colors[i % colors.length]);
+						segmentBorders.push(borders[i % borders.length]);
+					}
+					return {
+						...dataset,
+						backgroundColor: segmentColors,
+						borderColor: segmentBorders,
+						borderWidth: dataset.borderWidth ?? 2,
+					};
+				}
+				// For line/bar/other charts, use single color per dataset
+				return {
+					...dataset,
+					backgroundColor: dataset.backgroundColor || colors[index % colors.length],
+					borderColor: dataset.borderColor || borders[index % borders.length],
+					borderWidth: dataset.borderWidth ?? 2,
+				};
+			}),
 		};
 
 		const chartOptions = {
