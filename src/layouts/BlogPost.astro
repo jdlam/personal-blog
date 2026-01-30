@@ -23,69 +23,165 @@ const { title, description, pubDate, updatedDate } = Astro.props;
 	<body>
 		<Header />
 		<main>
-			<article>
-				<header>
-					<p class="date">
+			<article class="blog-post">
+				<header class="post-header">
+					<div class="post-meta">
 						<FormattedDate date={pubDate} />
 						{
 							updatedDate && (
 								<span class="updated">
-									(Updated: <FormattedDate date={updatedDate} />)
+									Updated: <FormattedDate date={updatedDate} />
 								</span>
 							)
 						}
-					</p>
+					</div>
 					<h1>{title}</h1>
+					{description && <p class="post-description">{description}</p>}
+					<div class="header-accent"></div>
 				</header>
-				<div class="content">
+				<div class="content prose">
 					<slot />
 				</div>
+				<footer class="post-footer">
+					<a href="/blog" class="back-link">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<line x1="19" y1="12" x2="5" y2="12"></line>
+							<polyline points="12 19 5 12 12 5"></polyline>
+						</svg>
+						Back to all posts
+					</a>
+				</footer>
 			</article>
 		</main>
 		<Footer />
 	</body>
 </html>
 <style>
-	article header {
-		margin-bottom: 2em;
+	.blog-post {
+		animation: fadeIn 0.5s ease;
 	}
-	.date {
-		color: rgb(var(--gray));
-		font-size: 0.9em;
-		margin-bottom: 0.5em;
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(12px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	.post-header {
+		margin-bottom: 3rem;
+		padding-bottom: 2rem;
+	}
+	.post-meta {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		color: var(--accent);
+		font-size: 0.9rem;
+		font-weight: 500;
+		margin-bottom: 1rem;
 	}
 	.updated {
-		font-style: italic;
+		color: rgb(var(--gray));
+		font-weight: 400;
 	}
-	article h1 {
-		font-size: 2em;
+	.post-header h1 {
+		font-size: clamp(1.75rem, 5vw, 2.5rem);
 		line-height: 1.2;
-		margin: 0;
+		margin: 0 0 1rem 0;
+		letter-spacing: -0.025em;
+	}
+	.post-description {
+		color: rgb(var(--gray-dark));
+		font-size: 1.15rem;
+		line-height: 1.6;
+		margin: 0 0 1.5rem 0;
+	}
+	.header-accent {
+		width: 80px;
+		height: 3px;
+		background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+		border-radius: 2px;
 	}
 	.content {
 		line-height: 1.8;
+		font-size: 1.05rem;
 	}
 	.content :global(h2) {
-		margin-top: 2em;
-		margin-bottom: 0.5em;
+		margin-top: 2.5rem;
+		margin-bottom: 1rem;
+		font-size: 1.5rem;
+		color: rgb(var(--text));
 	}
 	.content :global(h3) {
-		margin-top: 1.5em;
-		margin-bottom: 0.5em;
+		margin-top: 2rem;
+		margin-bottom: 0.75rem;
+		font-size: 1.25rem;
+		color: rgb(var(--text));
+	}
+	.content :global(p) {
+		margin-bottom: 1.5rem;
 	}
 	.content :global(pre) {
-		background: rgb(var(--gray-light));
-		padding: 1em;
-		border-radius: 4px;
+		background: var(--bg-secondary);
+		padding: 1.25rem 1.5rem;
+		border-radius: 12px;
 		overflow-x: auto;
+		margin: 1.5rem 0;
+		border: 1px solid rgb(var(--border));
 	}
 	.content :global(code) {
 		font-size: 0.9em;
 	}
 	.content :global(blockquote) {
-		border-left: 3px solid rgb(var(--gray));
-		padding-left: 1em;
-		margin-left: 0;
+		border-left: 3px solid var(--accent);
+		padding: 0.5rem 0 0.5rem 1.5rem;
+		margin: 1.5rem 0;
+		background: var(--highlight);
+		border-radius: 0 8px 8px 0;
 		color: rgb(var(--gray-dark));
+	}
+	.content :global(ul),
+	.content :global(ol) {
+		margin: 1.5rem 0;
+		padding-left: 1.5rem;
+	}
+	.content :global(li) {
+		margin-bottom: 0.5rem;
+	}
+	.content :global(a) {
+		color: var(--accent);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+	.content :global(a:hover) {
+		color: var(--accent-hover);
+	}
+	.post-footer {
+		margin-top: 4rem;
+		padding-top: 2rem;
+		border-top: 1px solid rgb(var(--border));
+	}
+	.back-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: rgb(var(--gray));
+		text-decoration: none;
+		font-size: 0.95rem;
+		font-weight: 500;
+		transition: color 0.2s ease;
+	}
+	.back-link:hover {
+		color: var(--accent);
+		text-decoration: none;
+	}
+	.back-link svg {
+		transition: transform 0.2s ease;
+	}
+	.back-link:hover svg {
+		transform: translateX(-3px);
 	}
 </style>

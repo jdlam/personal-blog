@@ -6,7 +6,10 @@ import ThemeToggle from './ThemeToggle.astro';
 
 <header>
 	<nav>
-		<a class="site-title" href="/">{SITE_TITLE}</a>
+		<a class="site-title" href="/">
+			<span class="logo-dot"></span>
+			{SITE_TITLE}
+		</a>
 		<div class="nav-links">
 			<HeaderLink href="/blog">Blog</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
@@ -16,33 +19,60 @@ import ThemeToggle from './ThemeToggle.astro';
 </header>
 <style>
 	header {
-		padding: 1.5em 1em;
+		padding: 1.25rem 1.5rem;
+		position: sticky;
+		top: 0;
+		background: var(--bg);
+		z-index: 100;
+		backdrop-filter: blur(10px);
 		border-bottom: 1px solid rgb(var(--border));
+		transition: background-color 0.3s ease, border-color 0.3s ease;
 	}
 	nav {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		max-width: 720px;
+		max-width: 680px;
 		margin: 0 auto;
 	}
 	.site-title {
-		font-weight: 600;
-		font-size: 1.1em;
+		font-weight: 700;
+		font-size: 1.05rem;
 		text-decoration: none;
 		color: rgb(var(--text));
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		letter-spacing: -0.02em;
+		transition: color 0.2s ease;
+	}
+	.site-title:hover {
+		color: var(--accent);
+		text-decoration: none;
+	}
+	.logo-dot {
+		width: 8px;
+		height: 8px;
+		background: var(--accent);
+		border-radius: 50%;
+		flex-shrink: 0;
 	}
 	.nav-links {
 		display: flex;
 		align-items: center;
-		gap: 1.5em;
+		gap: 1.75rem;
 	}
 	.nav-links :global(a) {
 		color: rgb(var(--text-muted));
 		text-decoration: none;
-		font-size: 0.95em;
+		font-size: 0.9rem;
+		font-weight: 500;
+		transition: color 0.2s ease;
 	}
-	.nav-links :global(a:hover),
+	.nav-links :global(a:hover) {
+		color: var(--accent);
+		text-decoration: none;
+	}
 	.nav-links :global(a.active) {
 		color: rgb(var(--text));
 	}
