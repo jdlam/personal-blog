@@ -2,6 +2,7 @@
 /**
  * Chart component for MDX blog posts
  * Uses Chart.js for rendering various chart types
+ * Colors are imported from /src/styles/chart-colors.ts for consistency
  *
  * Usage in MDX:
  * <Chart
@@ -12,6 +13,8 @@
  *   }}
  * />
  */
+import { darkThemeColors, lightThemeColors } from '../styles/chart-colors';
+
 interface Props {
 	type: 'bar' | 'line' | 'pie' | 'doughnut' | 'radar' | 'scatter';
 	data: {
@@ -35,17 +38,19 @@ const { type, data, options = {}, width, height } = Astro.props;
 // Generate unique ID for this chart instance
 const chartId = `chart-${Math.random().toString(36).substr(2, 9)}`;
 
-// Pass raw data to client-side script for theme-aware rendering
+// Pass raw data and color config to client-side script for theme-aware rendering
 const rawData = data;
 const hasScales = type !== 'pie' && type !== 'doughnut' && type !== 'radar';
 const userOptions = options;
+const chartColorsDark = darkThemeColors;
+const chartColorsLight = lightThemeColors;
 ---
 
 <div class="chart-container">
 	<canvas id={chartId} width={width} height={height}></canvas>
 </div>
 
-<script define:vars={{ chartId, type, rawData, hasScales, userOptions }}>
+<script define:vars={{ chartId, type, rawData, hasScales, userOptions, chartColorsDark, chartColorsLight }}>
 	// Detect current theme
 	function isDarkMode() {
 		const dataTheme = document.documentElement.getAttribute('data-theme');
@@ -55,49 +60,13 @@ const userOptions = options;
 		return !window.matchMedia('(prefers-color-scheme: light)').matches;
 	}
 
-	// Theme-aware colors - high contrast for visibility
+	// Get theme-aware colors from centralized config
 	function getColors(isDark) {
-		if (isDark) {
-			// Light colors on dark background
-			return {
-				colors: [
-					'rgba(255, 255, 255, 0.9)',
-					'rgba(180, 180, 180, 0.9)',
-					'rgba(255, 255, 255, 0.6)',
-					'rgba(180, 180, 180, 0.6)',
-					'rgba(220, 220, 220, 0.9)',
-				],
-				borders: [
-					'rgb(255, 255, 255)',
-					'rgb(180, 180, 180)',
-					'rgb(255, 255, 255)',
-					'rgb(180, 180, 180)',
-					'rgb(220, 220, 220)',
-				],
-				text: 'rgb(229, 229, 229)',
-				grid: 'rgba(255, 255, 255, 0.1)',
-			};
-		}
-		// Dark colors on light background
-		return {
-			colors: [
-				'rgba(55, 65, 81, 0.9)',
-				'rgba(107, 114, 128, 0.9)',
-				'rgba(55, 65, 81, 0.6)',
-				'rgba(107, 114, 128, 0.6)',
-				'rgba(75, 85, 99, 0.9)',
-			],
-			borders: [
-				'rgb(55, 65, 81)',
-				'rgb(107, 114, 128)',
-				'rgb(55, 65, 81)',
-				'rgb(107, 114, 128)',
-				'rgb(75, 85, 99)',
-			],
-			text: 'rgb(55, 65, 81)',
-			grid: 'rgba(55, 65, 81, 0.15)',
-		};
+		return isDark ? chartColorsDark : chartColorsLight;
 	}
+	
+	// Check if chart type needs per-segment colors (pie, doughnut)
+	const needsSegmentColors = type === 'pie' || type === 'doughnut';
 
 	let chartInstance = null;
 
@@ -115,12 +84,31 @@ const userOptions = options;
 
 		const processedData = {
 			...rawData,
-			datasets: rawData.datasets.map((dataset, index) => ({
-				...dataset,
-				backgroundColor: dataset.backgroundColor || colors[index % colors.length],
-				borderColor: dataset.borderColor || borders[index % borders.length],
-				borderWidth: dataset.borderWidth ?? 2,
-			})),
+			datasets: rawData.datasets.map((dataset, index) => {
+				// For pie/doughnut charts, apply array of colors to each segment
+				if (needsSegmentColors && !dataset.backgroundColor) {
+					const segmentCount = dataset.data.length;
+					const segmentColors = [];
+					const segmentBorders = [];
+					for (let i = 0; i < segmentCount; i++) {
+						segmentColors.push(colors[i % colors.length]);
+						segmentBorders.push(borders[i % borders.length]);
+					}
+					return {
+						...dataset,
+						backgroundColor: segmentColors,
+						borderColor: segmentBorders,
+						borderWidth: dataset.borderWidth ?? 2,
+					};
+				}
+				// For line/bar/other charts, use single color per dataset
+				return {
+					...dataset,
+					backgroundColor: dataset.backgroundColor || colors[index % colors.length],
+					borderColor: dataset.borderColor || borders[index % borders.length],
+					borderWidth: dataset.borderWidth ?? 2,
+				};
+			}),
 		};
 
 		const chartOptions = {
@@ -195,9 +183,11 @@ const userOptions = options;
 		width: 100%;
 		max-width: 600px;
 		margin: 2em auto;
-		padding: 1em;
+		padding: 1.5em;
 		background: var(--bg-secondary);
-		border-radius: 8px;
+		border-radius: 12px;
 		border: 1px solid rgb(var(--border));
+		box-shadow: var(--box-shadow);
+		transition: background-color 0.3s ease, border-color 0.3s ease;
 	}
 </style>

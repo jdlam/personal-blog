@@ -3,17 +3,51 @@ const today = new Date();
 ---
 
 <footer>
-	<p>&copy; {today.getFullYear()} Jonathan Lam</p>
+	<div class="footer-content">
+		<p class="copyright">&copy; {today.getFullYear()} Jonathan Lam</p>
+		<div class="footer-links">
+			<a href="https://github.com/jdlam" target="_blank" rel="noopener noreferrer">GitHub</a>
+		</div>
+	</div>
 </footer>
 <style>
 	footer {
-		padding: 3em 1em;
-		color: rgb(var(--gray));
-		text-align: center;
-		font-size: 0.9em;
-		border-top: 1px solid rgb(var(--gray-light));
+		padding: 3rem 1.5rem;
+		background: var(--bg-secondary);
+		border-top: 1px solid rgb(var(--border));
+		transition: background-color 0.3s ease, border-color 0.3s ease;
 	}
-	footer p {
+	.footer-content {
+		max-width: 680px;
+		margin: 0 auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.copyright {
 		margin: 0;
+		color: rgb(var(--gray));
+		font-size: 0.875rem;
+	}
+	.footer-links {
+		display: flex;
+		gap: 1.5rem;
+	}
+	.footer-links a {
+		color: rgb(var(--gray));
+		text-decoration: none;
+		font-size: 0.875rem;
+		transition: color 0.2s ease;
+	}
+	.footer-links a:hover {
+		color: var(--accent);
+		text-decoration: none;
+	}
+	@media (max-width: 480px) {
+		.footer-content {
+			flex-direction: column;
+			gap: 1rem;
+			text-align: center;
+		}
 	}
 </style>

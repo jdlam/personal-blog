@@ -14,14 +14,18 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<Header />
 		<main>
 			<section class="intro">
-				<h1>Hi, I'm Jonathan.</h1>
-				<p>
-					I'm a software engineer. I write about technology, software development,
-					and other things that interest me.
+				<div class="greeting">Hello, I'm</div>
+				<h1>Jonathan<span class="accent-dot">.</span></h1>
+				<p class="tagline">
+					Software engineer crafting thoughtful digital experiences.
 				</p>
-				<p>
-					<a href="/blog">Read the blog &rarr;</a>
+				<p class="description">
+					I write about technology, software development, and the ideas that fascinate me.
 				</p>
+				<div class="cta-group">
+					<a href="/blog" class="cta-primary">Read the blog</a>
+					<a href="/about" class="cta-secondary">About me</a>
+				</div>
 			</section>
 		</main>
 		<Footer />
@@ -29,23 +33,93 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 </html>
 <style>
 	.intro {
-		padding: 4em 0;
+		padding: 6rem 0 4rem;
+	}
+	.greeting {
+		font-size: 1rem;
+		color: var(--accent);
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		margin-bottom: 0.75rem;
 	}
 	.intro h1 {
-		font-size: 2.5em;
-		margin-bottom: 0.5em;
+		font-size: clamp(2.5rem, 8vw, 4rem);
+		font-weight: 700;
+		margin-bottom: 1.5rem;
+		letter-spacing: -0.03em;
+		line-height: 1;
 	}
-	.intro p {
-		color: rgb(var(--gray));
-		font-size: 1.2em;
-		max-width: 540px;
+	.accent-dot {
+		color: var(--accent-secondary);
 	}
-	.intro a {
-		color: rgb(var(--black));
-		text-decoration: none;
+	.tagline {
+		font-size: 1.35rem;
+		color: rgb(var(--text));
 		font-weight: 500;
+		margin-bottom: 1rem;
+		max-width: 500px;
+		line-height: 1.4;
 	}
-	.intro a:hover {
-		text-decoration: underline;
+	.description {
+		color: rgb(var(--gray));
+		font-size: 1.1rem;
+		max-width: 480px;
+		line-height: 1.6;
+		margin-bottom: 2.5rem;
+	}
+	.cta-group {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+	.cta-primary {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.875rem 1.5rem;
+		background: var(--accent);
+		color: var(--bg);
+		font-weight: 600;
+		font-size: 0.95rem;
+		border-radius: 8px;
+		text-decoration: none;
+		transition: all 0.2s ease;
+	}
+	.cta-primary:hover {
+		background: var(--accent-hover);
+		text-decoration: none;
+		transform: translateY(-1px);
+	}
+	.cta-secondary {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.875rem 1.5rem;
+		background: transparent;
+		color: rgb(var(--text));
+		font-weight: 600;
+		font-size: 0.95rem;
+		border-radius: 8px;
+		border: 1px solid rgb(var(--border));
+		text-decoration: none;
+		transition: all 0.2s ease;
+	}
+	.cta-secondary:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+		text-decoration: none;
+	}
+	@media (max-width: 480px) {
+		.intro {
+			padding: 3rem 0 2rem;
+		}
+		.cta-group {
+			flex-direction: column;
+		}
+		.cta-primary,
+		.cta-secondary {
+			justify-content: center;
+		}
 	}
 </style>

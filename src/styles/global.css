@@ -4,38 +4,53 @@
  * This avoids CSS cascade conflicts between media queries and attribute selectors.
  */
 
+/* Color palette:
+ * Primary: Teal/Cyan (#0d9488) - main accent for links and highlights
+ * Secondary: Coral/Terracotta (#e07a5f) - warm accent for interactive elements
+ * Background: Cream/Off-white (light) / Deep charcoal (dark)
+ * Text: Warm grays for readability
+ */
+
 /* Dark theme (default) */
 :root,
 [data-theme="dark"] {
-	--accent: #e5e5e5;
-	--accent-hover: #fff;
-	--bg: #1a1a1a;
-	--bg-secondary: #262626;
-	--text: 229, 229, 229;
-	--text-muted: 163, 163, 163;
-	--border: 64, 64, 64;
-	--box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-	--black: 229, 229, 229;
-	--gray-dark: 212, 212, 212;
-	--gray: 163, 163, 163;
-	--gray-light: 64, 64, 64;
+	--accent: #2dd4bf;
+	--accent-hover: #5eead4;
+	--accent-secondary: #f4a261;
+	--accent-secondary-hover: #f9c49a;
+	--bg: #18181b;
+	--bg-secondary: #27272a;
+	--bg-tertiary: #3f3f46;
+	--text: 244, 244, 245;
+	--text-muted: 161, 161, 170;
+	--border: 63, 63, 70;
+	--box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+	--black: 244, 244, 245;
+	--gray-dark: 212, 212, 216;
+	--gray: 161, 161, 170;
+	--gray-light: 63, 63, 70;
+	--highlight: rgba(45, 212, 191, 0.1);
 	color-scheme: dark;
 }
 
 /* Light theme */
 [data-theme="light"] {
-	--accent: #374151;
-	--accent-hover: #1f2937;
-	--bg: #fafaf9;
-	--bg-secondary: #f0f0ee;
-	--text: 55, 65, 81;
-	--text-muted: 107, 114, 128;
+	--accent: #0d9488;
+	--accent-hover: #0f766e;
+	--accent-secondary: #e07a5f;
+	--accent-secondary-hover: #c96a52;
+	--bg: #fef9f3;
+	--bg-secondary: #fdf4eb;
+	--bg-tertiary: #f5ebe0;
+	--text: 41, 37, 36;
+	--text-muted: 120, 113, 108;
 	--border: 214, 211, 209;
-	--box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-	--black: 31, 41, 55;
-	--gray-dark: 75, 85, 99;
-	--gray: 107, 114, 128;
-	--gray-light: 214, 211, 209;
+	--box-shadow: 0 2px 8px rgba(41, 37, 36, 0.08);
+	--black: 41, 37, 36;
+	--gray-dark: 68, 64, 60;
+	--gray: 120, 113, 108;
+	--gray-light: 231, 229, 228;
+	--highlight: rgba(13, 148, 136, 0.08);
 	color-scheme: light;
 }
 
@@ -80,7 +95,7 @@
 }
 
 body {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 	margin: 0;
 	padding: 0;
 	text-align: left;
@@ -88,14 +103,16 @@ body {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--text));
-	font-size: 18px;
-	line-height: 1.75;
+	font-size: 17px;
+	line-height: 1.7;
+	letter-spacing: -0.01em;
+	transition: background-color 0.3s ease, color 0.3s ease;
 }
 main {
-	width: 720px;
-	max-width: calc(100% - 2em);
+	width: 680px;
+	max-width: calc(100% - 3rem);
 	margin: auto;
-	padding: 3em 1em;
+	padding: 4rem 1.5rem;
 }
 h1,
 h2,
@@ -105,22 +122,25 @@ h5,
 h6 {
 	margin: 0 0 0.5rem 0;
 	color: rgb(var(--text));
-	line-height: 1.2;
+	line-height: 1.15;
+	letter-spacing: -0.025em;
+	font-weight: 600;
 }
 h1 {
-	font-size: 3.052em;
+	font-size: 2.75em;
+	font-weight: 700;
 }
 h2 {
-	font-size: 2.441em;
+	font-size: 2em;
 }
 h3 {
-	font-size: 1.953em;
+	font-size: 1.5em;
 }
 h4 {
-	font-size: 1.563em;
+	font-size: 1.25em;
 }
 h5 {
-	font-size: 1.25em;
+	font-size: 1.1em;
 }
 strong,
 b {
@@ -128,9 +148,13 @@ b {
 }
 a {
 	color: var(--accent);
+	text-decoration: none;
+	transition: color 0.2s ease;
 }
 a:hover {
 	color: var(--accent-hover);
+	text-decoration: underline;
+	text-underline-offset: 3px;
 }
 p {
 	margin-bottom: 1em;
@@ -154,24 +178,31 @@ img {
 	border-radius: 8px;
 }
 code {
-	padding: 2px 5px;
+	padding: 3px 6px;
 	background-color: var(--bg-secondary);
-	border-radius: 2px;
+	border-radius: 6px;
+	font-size: 0.9em;
+	font-family: "JetBrains Mono", "Fira Code", monospace;
 }
 pre {
-	padding: 1.5em;
-	border-radius: 8px;
+	padding: 1.25em 1.5em;
+	border-radius: 12px;
 	background-color: var(--bg-secondary) !important;
 	border: 1px solid rgb(var(--border));
+	overflow-x: auto;
 }
 pre > code {
 	all: unset;
+	font-family: "JetBrains Mono", "Fira Code", monospace;
 }
 blockquote {
-	border-left: 4px solid var(--accent);
-	padding: 0 0 0 20px;
-	margin: 0;
-	font-size: 1.333em;
+	border-left: 3px solid var(--accent);
+	padding: 0.5em 0 0.5em 1.5em;
+	margin: 1.5em 0;
+	font-size: 1.1em;
+	background: var(--highlight);
+	border-radius: 0 8px 8px 0;
+	color: rgb(var(--gray-dark));
 }
 hr {
 	border: none;
