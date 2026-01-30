@@ -55,47 +55,47 @@ const userOptions = options;
 		return !window.matchMedia('(prefers-color-scheme: light)').matches;
 	}
 
-	// Theme-aware colors - high contrast for visibility
+	// Theme-aware colors - using teal and coral accent colors
 	function getColors(isDark) {
 		if (isDark) {
-			// Light colors on dark background
+			// Vibrant colors on dark background
 			return {
 				colors: [
-					'rgba(255, 255, 255, 0.9)',
-					'rgba(180, 180, 180, 0.9)',
-					'rgba(255, 255, 255, 0.6)',
-					'rgba(180, 180, 180, 0.6)',
-					'rgba(220, 220, 220, 0.9)',
+					'rgba(45, 212, 191, 0.85)',   // Teal (primary)
+					'rgba(244, 162, 97, 0.85)',   // Coral/Orange (secondary)
+					'rgba(94, 234, 212, 0.75)',   // Light teal
+					'rgba(249, 196, 154, 0.75)',  // Light coral
+					'rgba(129, 230, 217, 0.8)',   // Medium teal
 				],
 				borders: [
-					'rgb(255, 255, 255)',
-					'rgb(180, 180, 180)',
-					'rgb(255, 255, 255)',
-					'rgb(180, 180, 180)',
-					'rgb(220, 220, 220)',
+					'rgb(45, 212, 191)',
+					'rgb(244, 162, 97)',
+					'rgb(94, 234, 212)',
+					'rgb(249, 196, 154)',
+					'rgb(129, 230, 217)',
 				],
-				text: 'rgb(229, 229, 229)',
-				grid: 'rgba(255, 255, 255, 0.1)',
+				text: 'rgb(244, 244, 245)',
+				grid: 'rgba(63, 63, 70, 0.5)',
 			};
 		}
-		// Dark colors on light background
+		// Vibrant colors on light background
 		return {
 			colors: [
-				'rgba(55, 65, 81, 0.9)',
-				'rgba(107, 114, 128, 0.9)',
-				'rgba(55, 65, 81, 0.6)',
-				'rgba(107, 114, 128, 0.6)',
-				'rgba(75, 85, 99, 0.9)',
+				'rgba(13, 148, 136, 0.85)',    // Teal (primary)
+				'rgba(224, 122, 95, 0.85)',    // Coral (secondary)
+				'rgba(20, 184, 166, 0.75)',    // Light teal
+				'rgba(239, 154, 129, 0.75)',   // Light coral
+				'rgba(45, 212, 191, 0.8)',     // Medium teal
 			],
 			borders: [
-				'rgb(55, 65, 81)',
-				'rgb(107, 114, 128)',
-				'rgb(55, 65, 81)',
-				'rgb(107, 114, 128)',
-				'rgb(75, 85, 99)',
+				'rgb(13, 148, 136)',
+				'rgb(224, 122, 95)',
+				'rgb(20, 184, 166)',
+				'rgb(239, 154, 129)',
+				'rgb(45, 212, 191)',
 			],
-			text: 'rgb(55, 65, 81)',
-			grid: 'rgba(55, 65, 81, 0.15)',
+			text: 'rgb(41, 37, 36)',
+			grid: 'rgba(214, 211, 209, 0.7)',
 		};
 	}
 
@@ -195,9 +195,11 @@ const userOptions = options;
 		width: 100%;
 		max-width: 600px;
 		margin: 2em auto;
-		padding: 1em;
+		padding: 1.5em;
 		background: var(--bg-secondary);
-		border-radius: 8px;
+		border-radius: 12px;
 		border: 1px solid rgb(var(--border));
+		box-shadow: var(--box-shadow);
+		transition: background-color 0.3s ease, border-color 0.3s ease;
 	}
 </style>
