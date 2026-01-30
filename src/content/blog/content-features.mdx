@@ -82,6 +82,31 @@ Interactive charts can be embedded using the Chart component:
   }}
 />
 
+### Multi-Dataset Bar Chart
+
+Bar charts can display multiple datasets with different colors for comparison:
+
+<Chart
+  type="bar"
+  data={{
+    labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+    datasets: [
+      {
+        label: 'Product A',
+        data: [65, 78, 90, 81]
+      },
+      {
+        label: 'Product B',
+        data: [45, 55, 70, 62]
+      },
+      {
+        label: 'Product C',
+        data: [30, 42, 55, 48]
+      }
+    ]
+  }}
+/>
+
 ### Line Chart
 
 <Chart
