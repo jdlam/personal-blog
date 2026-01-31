@@ -7,7 +7,7 @@ import ThemeToggle from './ThemeToggle.astro';
 <header>
 	<nav>
 		<a class="site-title" href="/">
-			<span class="logo-dot"></span>
+			<img class="logo" src="/logo-original-transparent-64.svg" alt="" width="24" height="24" />
 			{SITE_TITLE}
 		</a>
 		<div class="nav-links">
@@ -50,11 +50,9 @@ import ThemeToggle from './ThemeToggle.astro';
 		color: var(--accent);
 		text-decoration: none;
 	}
-	.logo-dot {
-		width: 8px;
-		height: 8px;
-		background: var(--accent);
-		border-radius: 50%;
+	.logo {
+		height: 1.5rem;
+		width: auto;
 		flex-shrink: 0;
 	}
 	.nav-links {
