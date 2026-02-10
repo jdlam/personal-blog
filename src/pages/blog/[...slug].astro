@@ -1,13 +1,19 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
+import { getBlogPostUrl } from '../../consts';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
+	return posts.map((post) => {
+		const url = getBlogPostUrl(post);
+		// Strip leading /blog/ and trailing / to get the slug for the catch-all route
+		const slug = url.replace(/^\/blog\//, '').replace(/\/$/, '');
+		return {
+			params: { slug },
+			props: post,
+		};
+	});
 }
 type Props = CollectionEntry<'blog'>;
 
