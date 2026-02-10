@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- V1: Minimalist lamb silhouette with JL hidden in negative space -->
+  <g fill="currentColor">
+    <!-- Wool/body cloud shape -->
+    <circle cx="32" cy="28" r="8"/>
+    <circle cx="24" cy="30" r="7"/>
+    <circle cx="40" cy="30" r="7"/>
+    <circle cx="28" cy="24" r="6"/>
+    <circle cx="36" cy="24" r="6"/>
+    <circle cx="26" cy="36" r="6"/>
+    <circle cx="38" cy="36" r="6"/>
+    <circle cx="32" cy="38" r="6"/>
+    <!-- Head -->
+    <ellipse cx="32" cy="44" rx="7" ry="6"/>
+    <!-- Ears -->
+    <ellipse cx="23" cy="42" rx="3.5" ry="5" transform="rotate(-20 23 42)"/>
+    <ellipse cx="41" cy="42" rx="3.5" ry="5" transform="rotate(20 41 42)"/>
+    <!-- Eyes (negative space) -->
+    <circle cx="29.5" cy="44" r="1.5" fill="var(--bg, #1a1a2e)"/>
+    <circle cx="34.5" cy="44" r="1.5" fill="var(--bg, #1a1a2e)"/>
+    <!-- Legs -->
+    <rect x="27" y="49" width="2.5" height="8" rx="1.25"/>
+    <rect x="34.5" y="49" width="2.5" height="8" rx="1.25"/>
+  </g>
+</svg>
